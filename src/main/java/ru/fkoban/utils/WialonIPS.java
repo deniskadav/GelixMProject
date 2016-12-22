@@ -55,7 +55,7 @@ public class WialonIPS {
 
     private static String makeWiaDateTime(GelixOnePacket processingGelixObject){
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy;HHmmss");
-        return Instant.ofEpochSecond(processingGelixObject.timeStamp.getTime() / 1000)
+        return Instant.ofEpochSecond(processingGelixObject.getTimeStamp().getTime() / 1000)
                 .atZone(ZoneId.of("UTC"))
                 .format(formatter);
     }
@@ -64,16 +64,16 @@ public class WialonIPS {
         //this method makes
         //5124.9130;N; from 51.415217
         //03454.1077;E from 34.901795
-        long latDegreesIntPart = (long) processingGelixObject.lat;
-        double latDegreesFractPart = processingGelixObject.lat - latDegreesIntPart;
+        long latDegreesIntPart = (long) processingGelixObject.getLat();
+        double latDegreesFractPart = processingGelixObject.getLat() - latDegreesIntPart;
 
         String earthHalfLat = "N";
         if (latDegreesIntPart < 0){
             earthHalfLat = "S";
         }
 
-        long lonDegreesIntPart = (long) processingGelixObject.lon;
-        double lonDegreesFractPart = processingGelixObject.lon - lonDegreesIntPart;
+        long lonDegreesIntPart = (long) processingGelixObject.getLon();
+        double lonDegreesFractPart = processingGelixObject.getLon() - lonDegreesIntPart;
 
         String earthHalfLon = "E";
         if (lonDegreesIntPart < 0){
@@ -104,17 +104,17 @@ public class WialonIPS {
         return String.format(new Locale("en"),"#D#%s;%s;%d;%d;NA;%d;NA;NA;NA;%.2f,%.2f,%.2f,%.2f;NA;cnt0:1:%d,cnt1:1:%d,cnt2:1:%d,cnt3:1:%d,rs232:1:%d\r\n",
                 makeWiaDateTime(processingGelixObject),
                 makeWiaLatLon(processingGelixObject),
-                (long) processingGelixObject.speed,
-                (long) processingGelixObject.dir,
-                processingGelixObject.sats,
-                processingGelixObject.in0,
-                processingGelixObject.in1,
-                processingGelixObject.in2,
-                processingGelixObject.in3,
-                processingGelixObject.in4,
-                processingGelixObject.in5,
-                processingGelixObject.in6,
-                processingGelixObject.in7,
-                processingGelixObject.rs232);
+                (int) processingGelixObject.getSpeed(),
+                (int) processingGelixObject.getDir(),
+                processingGelixObject.getSats(),
+                processingGelixObject.getIn0(),
+                processingGelixObject.getIn1(),
+                processingGelixObject.getIn2(),
+                processingGelixObject.getIn3(),
+                processingGelixObject.getIn4(),
+                processingGelixObject.getIn5(),
+                processingGelixObject.getIn6(),
+                processingGelixObject.getIn7(),
+                processingGelixObject.getRs232());
     }
 }

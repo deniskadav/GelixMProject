@@ -7,21 +7,21 @@ import java.util.Locale;
 public class SimpleJSONer {
     public static String makeJSONFromProcessingObject(GelixOnePacket processingGelixObject){
         return String.format(new Locale("en"),"{\"sdt\":\"%s\",\"ts\":%ts,\"lat\":%.6f,\"lon\":%.6f,\"speed\":%.1f,\"dir\":%.1f,\"sats\":%d,\"in0\":%.3f,\"in1\":%.3f,\"in2\":%.3f,\"in3\":%.3f,\"in4\":%d,\"in5\":%d,\"in6\":%d,\"in7\":%d,\"com\":%d}",
-                processingGelixObject.strDateTime,
-                processingGelixObject.timeStamp,
-                processingGelixObject.lat,
-                processingGelixObject.lon,
-                processingGelixObject.speed,
-                processingGelixObject.dir,
-                processingGelixObject.sats,
-                processingGelixObject.in0,
-                processingGelixObject.in1,
-                processingGelixObject.in2,
-                processingGelixObject.in3,
-                processingGelixObject.in4,
-                processingGelixObject.in5,
-                processingGelixObject.in6,
-                processingGelixObject.in7,
-                processingGelixObject.rs232);
+                processingGelixObject.getStrDateTime(),
+                processingGelixObject.getTimeStamp(),
+                processingGelixObject.getLat(),
+                processingGelixObject.getLon(),
+                processingGelixObject.getSpeed(),
+                processingGelixObject.getDir(),
+                processingGelixObject.getSats(),
+                processingGelixObject.getIn0(),
+                processingGelixObject.getIn1(),
+                processingGelixObject.getIn2(),
+                processingGelixObject.getIn3(),
+                processingGelixObject.getIn4(),
+                processingGelixObject.getIn5(),
+                processingGelixObject.getIn6(),
+                processingGelixObject.getIn7(),
+                processingGelixObject.getRs232());
     }
 }
