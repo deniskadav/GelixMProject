@@ -101,7 +101,7 @@ public class WialonIPS {
      * @return //#D#date;time;lat1;lat2;lon1;lon2;speed;course;height;sats;hdop;inputs;outputs;adc;ibutton;params\r\n
      */
     public static String makeIPSFromProcessingObject(GelixOnePacket processingGelixObject){
-        return String.format(new Locale("en"),"#D#%s;%s;%d;%d;NA;%d;NA;NA;NA;%.2f,%.2f,%.2f,%.2f;NA;cnt0:1:%d,cnt1:1:%d,cnt2:1:%d,cnt3:1:%d,rs232:1:%d\r\n",
+        return String.format(new Locale("en"),"#D#%s;%s;%d;%d;NA;%d;NA;NA;NA;%.2f,%.2f,%.2f,%.2f;NA;cnt0:1:%d,cnt1:1:%d,cnt2:1:%d,cnt3:1:%d,rs232:1:%d,rawPacket:3:%s,addInfo:3:%s\r\n",
                 makeWiaDateTime(processingGelixObject),
                 makeWiaLatLon(processingGelixObject),
                 (int) processingGelixObject.getSpeed(),
@@ -115,6 +115,8 @@ public class WialonIPS {
                 processingGelixObject.getIn5(),
                 processingGelixObject.getIn6(),
                 processingGelixObject.getIn7(),
-                processingGelixObject.getRs232());
+                processingGelixObject.getRs232(),
+                processingGelixObject.getRawPacket(),
+                processingGelixObject.getAdditionalInfo());
     }
 }

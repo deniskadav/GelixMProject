@@ -19,6 +19,26 @@ public class GelixOnePacket {
     private int in6;
     private int in7;
     private int rs232;
+    private String rawPacket;
+    private String additionalInfo;
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public String getRawPacket() {
+        return rawPacket;
+    }
+
+    public void setRawPacket(String rawPacket) {
+        this.rawPacket = rawPacket;
+    }
+
+
 
     public String getStrDateTime() {
         return strDateTime;

@@ -16,8 +16,8 @@ public class GelixParser {
     private String packet;
     private String packetInProcess;
     private GelixOnePacket processingGelixObject;
-    private List<String> jsonList = new ArrayList<>();
-    private List<String> wiaIPSList = new ArrayList<>();
+    private List<String> jsonList = new ArrayList<String>();
+    private List<String> wiaIPSList = new ArrayList<String>();
 
     private GelixOnePacket getProcessingGelixObject(){
         return this.processingGelixObject;
@@ -171,6 +171,7 @@ public class GelixParser {
         if (onePacket.length() >= (startOffset + 74))//get2bytes need to read 4 symbols, need to check if exists
             getProcessingGelixObject().setRs232(get2bytes(startOffset + 70));
         //TO DO need check is_valid_coords later
+        getProcessingGelixObject().setRawPacket(onePacket);
     }
 
     private String getOnePacket(int idx){
