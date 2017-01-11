@@ -3,7 +3,6 @@ package ru.fkoban.utils;
 
 import redis.clients.jedis.Jedis;
 
-import java.io.IOException;
 import java.util.*;
 
 public class RedisWorker {
@@ -16,7 +15,7 @@ public class RedisWorker {
      * @param password redis password
      */
     public RedisWorker(String host, int port, String password) {
-        //localhost 6379
+        //localhost 6379 by default
         cli = new Jedis(host, port, 5000);
         cli.auth(password);
         try {
@@ -31,9 +30,7 @@ public class RedisWorker {
      */
     public void close() {
         if (cli.isConnected()) {
-
                 cli.disconnect();
-
         }
     }
 
@@ -49,7 +46,7 @@ public class RedisWorker {
 
         for(Iterator<String> iterator = allKeys.iterator();iterator.hasNext();) {
             String IMEI =  iterator.next().split("_")[1];
-            resultMap.put(IMEI,getLastPoint(IMEI));
+            resultMap.put(IMEI, getLastPointByIMEI(IMEI));
         }
         return resultMap;
     }
@@ -59,16 +56,15 @@ public class RedisWorker {
      * @param IMEI imei of device
      * @param value JSON string with all parameters
      */
-
     public void updateLastPoint(String IMEI,String value) {
         cli.set("lastPoint_" + IMEI,value);
     }
     /**
-     * gets lastPoint information for IMEI
+     * gets lastPoint information for given IMEI
      * @param IMEI just IMEI of device
      * @return  String
      */
-    public String getLastPoint(String IMEI) {
+    public String getLastPointByIMEI(String IMEI) {
         return cli.get("lastPoint_" + IMEI);
     }
 }
