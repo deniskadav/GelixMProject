@@ -38,8 +38,10 @@ public class InsertPack extends HttpServlet {
         } else {
             GelixParser gp = new GelixParser(data,Integer.parseInt(onePacketLength));//create class with data and onepacketlength options
 
-            gp.processData();//this will generate JSON array of packets, WialonIPSArray  and send it to wialon server
-            gp.sendDataToWialonIPSServer(is);
+            //TODO need to retrieve lastpoint information from Redis
+            gp.processData();//this will generate JSON array of packets, WialonIPSArray
+            //TODO need to set lastpoint information to Redis
+            gp.sendDataToWialonIPSServer(is);//and send it to wialon server
         }
         request.setAttribute("answer", answer);
 
