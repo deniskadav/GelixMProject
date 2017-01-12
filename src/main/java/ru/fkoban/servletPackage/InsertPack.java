@@ -1,6 +1,7 @@
 package ru.fkoban.servletPackage;
 
 import ru.fkoban.gelix.GelixParser;
+import ru.fkoban.utils.RedisWorker;
 
 import javax.servlet.ServletException;
 import javax.servlet.RequestDispatcher;
@@ -39,6 +40,7 @@ public class InsertPack extends HttpServlet {
             GelixParser gp = new GelixParser(data,Integer.parseInt(onePacketLength));//create class with data and onepacketlength options
 
             //TODO need to retrieve lastpoint information from Redis
+            RedisWorker rw = new RedisWorker("localhost",6379,"");
             gp.processData();//this will generate JSON array of packets, WialonIPSArray
             //TODO need to set lastpoint information to Redis
             gp.sendDataToWialonIPSServer(is);//and send it to wialon server
