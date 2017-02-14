@@ -1,7 +1,9 @@
 package ru.fkoban.utils;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import redis.clients.jedis.Jedis;
+import ru.fkoban.gelix.GelixOnePacket;
 
 import java.util.*;
 
@@ -17,7 +19,7 @@ public class RedisWorker {
     public RedisWorker(String host, int port, String password) {
         //localhost 6379 by default
         cli = new Jedis(host, port, 5000);
-        cli.auth(password);
+        //cli.auth(password);
         try {
             cli.connect();
         } catch (Exception ex) {
@@ -39,8 +41,8 @@ public class RedisWorker {
 
      * @return list of strings
      */
-    public Map<String,String> getAllLastPoints() {
-        Map<String,String> resultMap = new HashMap<String, String>();
+    public Map<String,GelixOnePacket> getAllLastPoints() {
+        Map<String,GelixOnePacket> resultMap = new HashMap<String, GelixOnePacket>();
 
         Set<String> allKeys =  cli.keys("lastPoint_*");
 
@@ -64,7 +66,16 @@ public class RedisWorker {
      * @param IMEI just IMEI of device
      * @return  String
      */
-    public String getLastPointByIMEI(String IMEI) {
-        return cli.get("lastPoint_" + IMEI);
+    public GelixOnePacket getLastPointByIMEI(String IMEI) {
+        String lpString = cli.get("lastPoint_" + IMEI);
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            GelixOnePacket lastPacket = mapper.readValue(lpString, GelixOnePacket.class);
+            return lastPacket;
+        } catch (Exception e){
+            return null;
+        }
+
     }
 }

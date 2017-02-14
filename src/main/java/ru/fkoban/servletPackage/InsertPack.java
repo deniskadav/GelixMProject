@@ -1,5 +1,7 @@
 package ru.fkoban.servletPackage;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.fkoban.gelix.GelixOnePacket;
 import ru.fkoban.gelix.GelixParser;
 import ru.fkoban.utils.RedisWorker;
 
@@ -37,13 +39,21 @@ public class InsertPack extends HttpServlet {
             //TO DO check wrong_data_length from php sources
             answer = "ERR"+data.length()+"\r\n";
         } else {
-            GelixParser gp = new GelixParser(data,Integer.parseInt(onePacketLength));//create class with data and onepacketlength options
-
-            //TODO need to retrieve lastpoint information from Redis
             RedisWorker rw = new RedisWorker("localhost",6379,"");
+            GelixOnePacket lastPoint = rw.getLastPointByIMEI(is);
+            if (lastPoint == null){//if lastpoint for this imei is not set
+                System.out.println("lastPoint for device "+is+" is null");
+                lastPoint = new GelixOnePacket();
+            }
+            GelixParser gp = new GelixParser(data,Integer.parseInt(onePacketLength),lastPoint);//create class with data and onepacketlength options
             gp.processData();//this will generate JSON array of packets, WialonIPSArray
-            //TODO need to set lastpoint information to Redis
+
             gp.sendDataToWialonIPSServer(is);//and send it to wialon server
+
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonString = mapper.writeValueAsString(lastPoint);
+            rw.updateLastPoint(is,jsonString);
+            rw.close();
         }
         request.setAttribute("answer", answer);
 
