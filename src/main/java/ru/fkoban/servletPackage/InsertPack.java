@@ -51,8 +51,9 @@ public class InsertPack extends HttpServlet {
             gp.sendDataToWialonIPSServer(is);//and send it to wialon server
 
             ObjectMapper mapper = new ObjectMapper();
-            String jsonString = mapper.writeValueAsString(lastPoint);
-            rw.updateLastPoint(is,jsonString);
+            String jsonString = mapper.writeValueAsString(gp.lastGelixObject);
+            System.out.println("update lastpoint for device "+is+" "+jsonString);
+            rw.updateLastPoint(is, jsonString);
             rw.close();
         }
         request.setAttribute("answer", answer);

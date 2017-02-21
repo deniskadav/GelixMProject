@@ -16,7 +16,7 @@ public class GelixParser {
     private String packet;
     private String packetInProcess;
     private GelixOnePacket processingGelixObject;
-    private GelixOnePacket lastGelixObject;
+    public GelixOnePacket lastGelixObject;
     private List<String> jsonList = new ArrayList<String>();
     private List<String> wiaIPSList = new ArrayList<String>();
 
@@ -173,38 +173,42 @@ public class GelixParser {
         if (onePacket.length() >= (startOffset + 74))//get2bytes need to read 4 symbols, need to check if exists
             getProcessingGelixObject().setRs232(get2bytes(startOffset + 70));
 
-        checkValidCoords(this.lastGelixObject,getProcessingGelixObject());
+        checkValidCoords();
         getProcessingGelixObject().setRawPacket(onePacket);
     }
 
-    private void checkValidCoords(GelixOnePacket lastPoint,GelixOnePacket curPoint){
-
-        if (lastPoint.getTimeStamp() != null){//first string is always valid
-            if (curPoint.getTimeStamp().getTime() < lastPoint.getTimeStamp().getTime()){//if datetime is less than lastTime - bad coord
-                curPoint.setLat(lastPoint.getLat());
-                curPoint.setLon(lastPoint.getLon());
-                curPoint.setDir(lastPoint.getDir());
-                curPoint.setTimeStamp(lastPoint.getTimeStamp());
-                curPoint.setStrDateTime(lastPoint.getStrDateTime());
-                curPoint.setRs232(lastPoint.getRs232());
-                curPoint.setIn0(lastPoint.getIn0());
-                curPoint.setIn1(lastPoint.getIn1());
-                curPoint.setIn2(lastPoint.getIn2());
-                curPoint.setIn3(lastPoint.getIn3());
-                curPoint.setAdditionalInfo("invalid time");
+    private void checkValidCoords(){
+        System.out.println("checkValidCoords for "+getProcessingGelixObject());
+        if (this.lastGelixObject.getTimeStamp() != null){//first string is always valid
+            if (getProcessingGelixObject().getTimeStamp().getTime() < this.lastGelixObject.getTimeStamp().getTime()){//if datetime is less than lastTime - bad coord
+                getProcessingGelixObject().setLat(this.lastGelixObject.getLat());
+                getProcessingGelixObject().setLon(this.lastGelixObject.getLon());
+                getProcessingGelixObject().setDir(this.lastGelixObject.getDir());
+                getProcessingGelixObject().setTimeStamp(this.lastGelixObject.getTimeStamp());
+                getProcessingGelixObject().setStrDateTime(this.lastGelixObject.getStrDateTime());
+                getProcessingGelixObject().setRs232(this.lastGelixObject.getRs232());
+                getProcessingGelixObject().setIn0(this.lastGelixObject.getIn0());
+                getProcessingGelixObject().setIn1(this.lastGelixObject.getIn1());
+                getProcessingGelixObject().setIn2(this.lastGelixObject.getIn2());
+                getProcessingGelixObject().setIn3(this.lastGelixObject.getIn3());
+                getProcessingGelixObject().setAdditionalInfo("invalid time");
+                System.out.println("выставили curPoint "+getProcessingGelixObject().getStrDateTime());
+                System.out.println("lastGelixObject "+this.lastGelixObject.getStrDateTime());
             }
         }
         else {
-            lastPoint.setLat(curPoint.getLat());
-            lastPoint.setLon(curPoint.getLon());
-            lastPoint.setDir(curPoint.getDir());
-            lastPoint.setTimeStamp(curPoint.getTimeStamp());
-            lastPoint.setStrDateTime(curPoint.getStrDateTime());
-            lastPoint.setRs232(curPoint.getRs232());
-            lastPoint.setIn0(curPoint.getIn0());
-            lastPoint.setIn1(curPoint.getIn1());
-            lastPoint.setIn2(curPoint.getIn2());
-            lastPoint.setIn3(curPoint.getIn3());
+            this.lastGelixObject.setLat(getProcessingGelixObject().getLat());
+            this.lastGelixObject.setLon(getProcessingGelixObject().getLon());
+            this.lastGelixObject.setDir(getProcessingGelixObject().getDir());
+            this.lastGelixObject.setTimeStamp(getProcessingGelixObject().getTimeStamp());
+            this.lastGelixObject.setStrDateTime(getProcessingGelixObject().getStrDateTime());
+            this.lastGelixObject.setRs232(getProcessingGelixObject().getRs232());
+            this.lastGelixObject.setIn0(getProcessingGelixObject().getIn0());
+            this.lastGelixObject.setIn1(getProcessingGelixObject().getIn1());
+            this.lastGelixObject.setIn2(getProcessingGelixObject().getIn2());
+            this.lastGelixObject.setIn3(getProcessingGelixObject().getIn3());
+            System.out.println("выставили lastpoint "+this.lastGelixObject.getStrDateTime());
+            System.out.println("lastGelixObject "+this.lastGelixObject.getStrDateTime());
         }
 
 
