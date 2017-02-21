@@ -26,6 +26,7 @@ public class SimpleJSONer {
                 processingGelixObject.getRawPacket(),
                 processingGelixObject.getAdditionalInfo()
         );
+            System.out.println("one packet json string is " + returnString);
             return returnString;
     }
 }

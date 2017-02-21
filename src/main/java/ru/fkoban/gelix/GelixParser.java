@@ -177,8 +177,23 @@ public class GelixParser {
         getProcessingGelixObject().setRawPacket(onePacket);
     }
 
+    private void setLastGelixObject(){
+        this.lastGelixObject.setLat(getProcessingGelixObject().getLat());
+        this.lastGelixObject.setLon(getProcessingGelixObject().getLon());
+        this.lastGelixObject.setDir(getProcessingGelixObject().getDir());
+        this.lastGelixObject.setTimeStamp(getProcessingGelixObject().getTimeStamp());
+        this.lastGelixObject.setStrDateTime(getProcessingGelixObject().getStrDateTime());
+        this.lastGelixObject.setRs232(getProcessingGelixObject().getRs232());
+        this.lastGelixObject.setIn0(getProcessingGelixObject().getIn0());
+        this.lastGelixObject.setIn1(getProcessingGelixObject().getIn1());
+        this.lastGelixObject.setIn2(getProcessingGelixObject().getIn2());
+        this.lastGelixObject.setIn3(getProcessingGelixObject().getIn3());
+        System.out.println("выставили lastpoint "+this.lastGelixObject.getStrDateTime());
+        System.out.println("lastGelixObject "+this.lastGelixObject.getStrDateTime());
+    }
+
     private void checkValidCoords(){
-        System.out.println("checkValidCoords for "+getProcessingGelixObject());
+        System.out.println("checkValidCoords for datetime "+getProcessingGelixObject().getStrDateTime());
         if (this.lastGelixObject.getTimeStamp() != null){//first string is always valid
             if (getProcessingGelixObject().getTimeStamp().getTime() < this.lastGelixObject.getTimeStamp().getTime()){//if datetime is less than lastTime - bad coord
                 getProcessingGelixObject().setLat(this.lastGelixObject.getLat());
@@ -195,20 +210,12 @@ public class GelixParser {
                 System.out.println("выставили curPoint "+getProcessingGelixObject().getStrDateTime());
                 System.out.println("lastGelixObject "+this.lastGelixObject.getStrDateTime());
             }
+            else {
+                setLastGelixObject();
+            }
         }
         else {
-            this.lastGelixObject.setLat(getProcessingGelixObject().getLat());
-            this.lastGelixObject.setLon(getProcessingGelixObject().getLon());
-            this.lastGelixObject.setDir(getProcessingGelixObject().getDir());
-            this.lastGelixObject.setTimeStamp(getProcessingGelixObject().getTimeStamp());
-            this.lastGelixObject.setStrDateTime(getProcessingGelixObject().getStrDateTime());
-            this.lastGelixObject.setRs232(getProcessingGelixObject().getRs232());
-            this.lastGelixObject.setIn0(getProcessingGelixObject().getIn0());
-            this.lastGelixObject.setIn1(getProcessingGelixObject().getIn1());
-            this.lastGelixObject.setIn2(getProcessingGelixObject().getIn2());
-            this.lastGelixObject.setIn3(getProcessingGelixObject().getIn3());
-            System.out.println("выставили lastpoint "+this.lastGelixObject.getStrDateTime());
-            System.out.println("lastGelixObject "+this.lastGelixObject.getStrDateTime());
+            setLastGelixObject();
         }
 
 
