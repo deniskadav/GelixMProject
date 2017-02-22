@@ -36,7 +36,6 @@ public class InsertPack extends HttpServlet {
         String sm = request.getParameter("sm");//additional stringMessage
 
         if (data.length() == 0) {
-            //TO DO check wrong_data_length from php sources
             answer = "ERR"+data.length()+"\r\n";
         } else {
             RedisWorker rw = new RedisWorker("localhost",6379,"");

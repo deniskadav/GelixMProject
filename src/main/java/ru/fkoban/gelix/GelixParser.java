@@ -188,12 +188,9 @@ public class GelixParser {
         this.lastGelixObject.setIn1(getProcessingGelixObject().getIn1());
         this.lastGelixObject.setIn2(getProcessingGelixObject().getIn2());
         this.lastGelixObject.setIn3(getProcessingGelixObject().getIn3());
-        System.out.println("выставили lastpoint "+this.lastGelixObject.getStrDateTime());
-        System.out.println("lastGelixObject "+this.lastGelixObject.getStrDateTime());
     }
 
     private void checkValidCoords(){
-        System.out.println("checkValidCoords for datetime "+getProcessingGelixObject().getStrDateTime());
         if (this.lastGelixObject.getTimeStamp() != null){//first string is always valid
             if (getProcessingGelixObject().getTimeStamp().getTime() < this.lastGelixObject.getTimeStamp().getTime()){//if datetime is less than lastTime - bad coord
                 getProcessingGelixObject().setLat(this.lastGelixObject.getLat());
@@ -207,8 +204,6 @@ public class GelixParser {
                 getProcessingGelixObject().setIn2(this.lastGelixObject.getIn2());
                 getProcessingGelixObject().setIn3(this.lastGelixObject.getIn3());
                 getProcessingGelixObject().setAdditionalInfo("invalid time");
-                System.out.println("выставили curPoint "+getProcessingGelixObject().getStrDateTime());
-                System.out.println("lastGelixObject "+this.lastGelixObject.getStrDateTime());
             }
             else {
                 setLastGelixObject();

@@ -71,7 +71,6 @@ public class RedisWorker {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            System.out.println("read lastpoint for device "+IMEI+" "+lpString);
             GelixOnePacket lastPacket = mapper.readValue(lpString, GelixOnePacket.class);
             return lastPacket;
         } catch (Exception e){
